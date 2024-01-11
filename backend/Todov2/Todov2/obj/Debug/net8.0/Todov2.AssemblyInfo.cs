@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Todov2")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a994d36e7279798b65d320cc1fea8520f6788b99")]
 [assembly: System.Reflection.AssemblyProductAttribute("Todov2")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Todov2")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

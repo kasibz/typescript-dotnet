@@ -11,33 +11,58 @@ namespace Todov2.Controllers
     [ApiController]
     public class UserController : ControllerBase
     {
-
+        // instantiating DataContext to interact with Db
         private readonly DataContext _dbContext;
 
+        // using DI, inject the context to the controller through a constructor
+        // allows mocking of a db, decouples db from backend
         public UserController(DataContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        // GET: api/<UserController>
+        // GET: api/user
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<User>>> GetUsers()
+        public async Task<ActionResult<IEnumerable<User>>> GetAllUsers()
         {
-            if(_dbContext.User == null)
+            try
             {
-                return NotFound();
+                if (_dbContext.User == null)
+                {
+                    return NotFound();
+                }
+                return await _dbContext.User.ToListAsync();
             }
-            return await _dbContext.User.ToListAsync();
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
         }
 
-        // GET api/<UserController>/5
+        // GET api/user/{id}
+        // looks like IActionResult is more for generic types and 
+        // ActionResult is more for a specified return like an Entity
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<ActionResult<User>> GetUserById(int id)
         {
-            return "value";
+            try
+            {
+                var user = await _dbContext.User.FirstOrDefaultAsync(x => x.Id == id);
+                if (user == null)
+                {
+                    return NotFound();
+                }
+
+                return user;
+            } 
+            catch (Exception ex)
+            {
+                return StatusCode(500, "Internal Server Error");
+            }
+
         }
 
-        // POST api/<UserController>
+        // POST api/user
         [HttpPost]
         public void Post([FromBody] string value)
         {
